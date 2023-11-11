@@ -1,15 +1,17 @@
-//Write a C Program to print an Array.
-
+////Write a C Program to print an Array////
 #include <stdio.h>
 int main(){
 	int n, i;
-	int arr[100];
-	int a = arr[100];
-	printf("Number of elements you want in your array.\n");
+	printf("Number of elements you want in your array - ");
 	scanf("%d", &n);
+	int arr[n];
 	for(i=1; i<=n; i++){
 		printf("Enter element number %d : ", i);
-		Scanf("%d", &arr[i]);
+		scanf("%d", &arr[i]);	
 	}
-	printf("Array of numbers are as follows : %d", a);
+	printf("Array of numbers are as follows : ");
+	for(i=1; i<=n; i++){
+		printf("%d\t",arr[i]);
+	}
+	return 0;
 }
