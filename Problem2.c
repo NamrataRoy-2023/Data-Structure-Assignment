@@ -3,8 +3,6 @@
 #include <string.h>
 int main(){
 	char str[100];
-	printf("enter a String : ");
-	gets(str);
 	int i = strlen(str) - 1;
 	int j = 0;
 	while(i>j){
@@ -14,8 +12,7 @@ int main(){
 		}
 		else{
 			printf("%d is NOT a Palindrome",str);
-			
-		}
+					}
 		return 0;
 	}
 }
