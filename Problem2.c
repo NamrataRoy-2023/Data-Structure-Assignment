@@ -3,17 +3,20 @@
 #include <string.h>
 int main(){
 	char str[100];
-	int i = strlen(str) - 1;
+	printf("enter a string : ");
+	scanf("%s",str);
+	int len = strlen(str);
+	int i = len - 1;
 	int j = 0;
 	while(i>j){
 		if(str[j++] == str[i--]){
-			printf("%d is a Palindrome",str);
+			printf("is a Palindrome");
 			return 0;
 		}
 		else{
-			printf("%d is NOT a Palindrome",str);
-					}
-		return 0;
+			printf("is NOT a Palindrome");
+		}
 	}
+	return 0;
 }
 

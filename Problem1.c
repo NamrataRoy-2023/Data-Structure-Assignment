@@ -7,7 +7,7 @@ int main(){
 	int arr[n];
 	for(i=1; i<=n; i++){
 		printf("Enter element number %d : ", i);
-		scanf("%d", &arr[i]);	
+		scanf("%d", &arr[i]);
 	}
 	printf("Array of numbers are as follows : ");
 	for(i=1; i<=n; i++){
