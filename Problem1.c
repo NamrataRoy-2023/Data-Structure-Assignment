@@ -1,4 +1,4 @@
-////Write a C Program to print an Array////
+///Write a C Program to print an Array///
 #include <stdio.h>
 int main(){
 	int n, i;

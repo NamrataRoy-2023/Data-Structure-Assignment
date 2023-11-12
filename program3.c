@@ -1,4 +1,4 @@
-////Write a C Program to convert temparature from degree centigrade to farhenheit////
+///Write a C Program to convert temparature from degree centigrade to farhenheit///
 #include <stdio.h>
 int main(){
 	int c,f;
