@@ -13,10 +13,9 @@ int main(){
 			printf("is a Palindrome");
 			return 0;
 		}
-		else{
-			printf("is NOT a Palindrome");
-		}
 	}
+	printf("is NOT a Palindrome");
 	return 0;
+
 }
 
