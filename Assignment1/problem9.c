@@ -10,8 +10,13 @@ int main(){
 		printf("Enter Value for Index Number %d : ",i);
 		scanf("%d", &arr[i]);
 	}
+    printf("Entered Array as follows : ");
+	for(i=0; i<n; i++){
+		printf("%d\t",arr[i]);
+	}
+	printf("\n");
 	printf("Reversed Array is : ");
-	for(i=arr[n-1]; i>=0; i--){
+	for(i=n-1; i>=0; i--){
 		printf("%d\t", arr[i]);
 	}
 	return 0;
