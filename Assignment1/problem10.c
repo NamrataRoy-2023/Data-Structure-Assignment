@@ -1,0 +1,1 @@
+///Write a C program to check the sum of all elements of an array///

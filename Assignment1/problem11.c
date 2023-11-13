@@ -1,0 +1,1 @@
+///Write a C program to check duplicate number in an array///
