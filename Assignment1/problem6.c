@@ -14,7 +14,7 @@ int main(){
 	int n;
 	printf("Enter Number of Terms : ");
 	scanf("%d",&n);
-	printf("Fibonacci Series is : 0		1	");  
+	printf("Fibonacci Series is : 0		1	");
 	fibonacci(n-2);
 	return 0;
 }
