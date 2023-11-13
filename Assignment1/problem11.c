@@ -19,7 +19,6 @@ int main(){
 				duplicate = 1;
 				break;
 			}
-			break;
 		}
 	}
 	if(!duplicate){
