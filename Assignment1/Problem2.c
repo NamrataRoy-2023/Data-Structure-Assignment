@@ -10,11 +10,11 @@ int main(){
 	int j = 0;
 	while(i>j){
 		if(str[j++] == str[i--]){
-			printf("is a Palindrome");
+			printf("Entered String is a Palindrome");
 			return 0;
 		}
 	}
-	printf("is NOT a Palindrome");
+	printf("Entered String is NOT a Palindrome");
 	return 0;
 
 }
