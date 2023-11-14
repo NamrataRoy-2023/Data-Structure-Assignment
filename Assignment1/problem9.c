@@ -14,9 +14,8 @@ int main(){
 	for(i=0; i<n; i++){
 		printf("%d\t",arr[i]);
 	}
-	printf("\n");
 	printf("Reversed Array is : ");
-	for(i=n-1; i>=0; i--){
+	for(i=arr[n-1]; i>=0; i--){
 		printf("%d\t", arr[i]);
 	}
 	return 0;
