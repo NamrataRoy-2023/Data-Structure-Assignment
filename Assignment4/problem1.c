@@ -3,11 +3,11 @@
 ///b) Display the elements of a doubly linked list.///
 ///c) Insert a node at the beginning of a doubly linked list.///
 ///d) Insert a node at the end of a doubly linked list.///
-///e) Insert a node before a given node of a doubly linked list.
-///f) Insert a node after a given node of a doubly linked list.
+///e) Insert a node before a given node of a doubly linked list.///
+///f) Insert a node after a given node of a doubly linked list.///
 ///g) Delete a node from the beginning of a doubly linked list.///
 ///h) Delete a node from the end of a doubly linked list.///
-///i) Delete a node after a given node of a doubly linked list.
+///i) Delete a node after a given node of a doubly linked list.///
 ///j) Delete the entire doubly linked list.
 
 
@@ -50,6 +50,63 @@ void insertAtEnd(int data){
 		newNode -> prev =  current;
 	}
 }
+///INSERT BEFORE A GIVEN NODE
+void insertBeforeNode(int data){
+	struct node * newNode = createNode(data);
+	struct node * temp;
+	int i,loc;
+	if(newNode == NULL){
+		printf("Linked List is Full.");
+	}
+	else{
+		printf("Enter The Node Number Before which you want to Insert the new node : ");
+		scanf("%d", &loc);
+		temp = head;
+		for(i=0; i<loc; i++){
+			temp = temp -> next;
+			if(temp == NULL){
+				printf("Entered node doesn't exist.Enter a Valid input.");
+				return;
+			}
+		}
+		newNode -> next = temp;
+		newNode -> prev = temp -> prev;
+		newNode -> prev -> next = newNode;
+		temp -> prev = newNode;
+	}
+	
+}
+
+
+
+///INSERT AFTER A GIVEN NODE
+void insertAfterNode(int data){
+	struct node * newNode = createNode(data);
+	struct node * temp;
+	int i,loc;
+	if(newNode == NULL){
+		printf("Linked List is Full.");
+	}
+	else{
+		printf("Enter The Node Number After which you want to Insert the new node : ");
+		scanf("%d", &loc);
+		temp = head;
+		for(i=0; i<loc; i++){
+			temp = temp -> next;
+			if(temp == NULL){
+				printf("Entered node doesn't exist.Enter a Valid input.");
+				return;
+			}
+		}
+		newNode -> next = temp -> next;
+		newNode -> prev = temp;
+		newNode -> next -> prev = newNode;
+		temp -> next = newNode;
+	}
+	
+}
+
+
 ///DELETE AT BEGIN
 void deleteAtBegin(){
 	if(head == NULL){
@@ -81,6 +138,28 @@ void deleteAtEnd(){
 		free(temp);
 	}
 }
+///DELETE A NODE AFTER A GIVEN NODE
+void deleteAfterNode(int key){
+	int i,loc;
+	struct node * ptr1,*ptr2;
+	ptr1 = head;
+	if(head == NULL){
+		printf("Linked List is Empty.");
+	}
+	else{
+		while(ptr1 -> next != NULL){
+			if(ptr1 -> data == key){
+				ptr2 = ptr1 -> next;
+				ptr1 -> next = ptr2 -> next;
+				free(ptr2);
+				break;
+			}
+			ptr1 = ptr1 -> next;
+		}
+	}
+}
+
+
 ///DISPLAY
 void display(){
 	struct node *current = head;
@@ -89,7 +168,7 @@ void display(){
 		return;
 	}
 	else{
-		printf("NULL <-> ");
+		printf("START <-> ");
 		while(current != NULL){
 			printf("%d <-> " , current->data);
 			current = current -> next;
@@ -110,11 +189,40 @@ int main(){
 		insertAtEnd(value);	
 	}
 	display();
+	
+	printf("\n");
+	
+	printf("Enter value for new Node : ");
+	scanf("%d", &value);
+	insertBeforeNode(value);
+	printf("New list after insertion before a node : ");
+	display();
+		
+	printf("\n");
+	
+	printf("Enter value for new Node : ");
+	scanf("%d", &value);
+	insertAfterNode(value);
+	printf("New list after insertion After a node : ");
+	display();
+	
+	printf("\n");
+	
 	deleteAtBegin();
 	printf("New list after deletion of first element : ");
 	display();
+		
 	printf("\n");
+	
 	deleteAtEnd();
 	printf("New list after deletion of last element : ");
+	display();
+	
+    printf("\n");
+	
+	printf("enter node you want to delete : ");
+	scanf("%d", &value);
+	deleteAfterNode(value);
+	printf("New list after deletion of node after a node: ");
 	display();
 }
