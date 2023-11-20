@@ -140,7 +140,7 @@ void deleteAtEnd(){
 }
 ///DELETE A NODE AFTER A GIVEN NODE
 void deleteAfterNode() {
-    int loc;
+    int loc,i;
     struct node *temp;
     if (head == NULL) {
         printf("Linked List is Empty.");
@@ -148,7 +148,7 @@ void deleteAfterNode() {
         printf("Enter The Node Number After which you want to delete the node : ");
         scanf("%d", &loc);
         temp = head;
-        for (int i = 1; i < loc; i++) {
+        for ( i = 1; i < loc; i++) {
             if (temp == NULL) {
                 printf("Entered node doesn't exist. Enter a Valid input.");
                 return;
