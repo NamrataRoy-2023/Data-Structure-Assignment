@@ -139,28 +139,36 @@ void deleteAtEnd(){
 	}
 }
 ///DELETE A NODE AFTER A GIVEN NODE
-void deleteAfterNode(){
-	int i,loc;
-	struct node * temp;
-	if(head == NULL){
-		printf("Linked List is Empty.");
-	}
-	else{
-		printf("Enter The Node Number After which you want to delete the node : ");
-		scanf("%d", &loc);
-		temp = head;
-		for(i=1; i<=loc; i++){
-			temp = temp -> next;
-			if(temp == NULL){
-				printf("Entered node doesn't exist.Enter a Valid input.");
-				return;
-			}
-		}
-		temp -> next = temp -> next -> next;
-		temp -> next ->prev = temp;
-		free(temp);
-	}
+void deleteAfterNode() {
+    int loc;
+    struct node *temp;
+    if (head == NULL) {
+        printf("Linked List is Empty.");
+    } else {
+        printf("Enter The Node Number After which you want to delete the node : ");
+        scanf("%d", &loc);
+        temp = head;
+        for (int i = 1; i < loc; i++) {
+            if (temp == NULL) {
+                printf("Entered node doesn't exist. Enter a Valid input.");
+                return;
+            }
+            temp = temp->next;
+        }
+
+        if (temp != NULL && temp->next != NULL) {
+            struct node *nodeToDelete = temp->next;
+            temp->next = temp->next->next;
+            if (temp->next != NULL) {
+                temp->next->prev = temp;
+            }
+            free(nodeToDelete);
+        } else {
+            printf("No node to delete after.\n");
+        }
+    }
 }
+
 
 ///DELETE THE LIST
 void deleteList() {
@@ -246,9 +254,7 @@ int main() {
                 break;
 
             case 7:
-                printf("Enter node value after which you want to delete: ");
-                scanf("%d", &value);
-                deleteAfterNode(value);
+                deleteAfterNode();
                 break;
 
             case 8:
