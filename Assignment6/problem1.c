@@ -1,4 +1,8 @@
-
+///1) Write a Menu driven C program to accomplish the following functionalities in Stack using an Array:
+///a. Insert an element into the stack using an array (Push Operation).
+///b. Delete an element from the stack using an array (Pop Operation).
+///c. Return the value of the topmost element of the stack (without deleting it from the stack) using an array.
+///d. Display the elements of a stack using an array.///
 
 #include <stdio.h>
 
