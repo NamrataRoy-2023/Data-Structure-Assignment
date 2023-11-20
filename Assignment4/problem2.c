@@ -1,303 +1,225 @@
+///Write a Menu driven C program to accomplish the following functionalities in circular doubly linked list.
+///a) Create a circular doubly linked list.
+///b) Display the elements of a circular doubly linked list.
+///c) Insert a node at the beginning of a circular doubly linked list.
+///d) Insert a node at the end of a circular doubly linked list.
+///e) Delete a node from the beginning of a circular doubly linked list.
+///f) Delete a node from the end of a circular doubly linked list.
+///g) Delete a node after a given node of a circular doubly linked list.
+///h) Delete the entire circular doubly linked list.
+
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define the structure for a doubly linked list node
-struct Node {
+struct node {
     int data;
-    struct Node* prev;
-    struct Node* next;
+    struct node *next;
+    struct node *prev;
 };
 
-// Function to create a new node
-struct Node* createNode(int newData) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    if (newNode == NULL) {
-        printf("Memory allocation failed.\n");
-        exit(1);
-    }
-    newNode->data = newData;
-    newNode->prev = NULL;
-    newNode->next = NULL;
+struct node *head = NULL;
+
+struct node *createNode(int data) {
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
+    newNode->data = data;
+    newNode->next = newNode->prev = newNode;
     return newNode;
 }
 
-// Function to display the doubly linked list
-void displayList(struct Node* head) {
-    struct Node* current = head;
-    while (current != NULL) {
+// Function to display the circular doubly linked list
+void display() {
+    if (head == NULL) {
+        printf("Circular Doubly Linked List is empty.\n");
+        return;
+    }
+
+    struct node *current = head;
+    do {
         printf("%d <-> ", current->data);
         current = current->next;
-    }
-    printf("NULL\n");
+    } while (current != head);
+    printf("(head)\n");
 }
 
-// Function to insert a node at the beginning of the doubly linked list
-struct Node* insertAtBeginning(struct Node* head, int newData) {
-    struct Node* newNode = createNode(newData);
+// Function to insert a node at the beginning of the circular doubly linked list
+void insertAtBegin(int data) {
+    struct node *newNode = createNode(data);
 
     if (head == NULL) {
-        return newNode;
+        head = newNode;
+    } else {
+        newNode->next = head;
+        newNode->prev = head->prev;
+        head->prev->next = newNode;
+        head->prev = newNode;
+        head = newNode;
     }
 
-    newNode->next = head;
-    head->prev = newNode;
-    return newNode;
+    printf("Node inserted at the beginning.\n");
 }
 
-// Function to insert a node at the end of the doubly linked list
-struct Node* insertAtEnd(struct Node* head, int newData) {
-    struct Node* newNode = createNode(newData);
+// Function to insert a node at the end of the circular doubly linked list
+void insertAtEnd(int data) {
+    struct node *newNode = createNode(data);
 
     if (head == NULL) {
-        return newNode;
+        head = newNode;
+    } else {
+        newNode->next = head;
+        newNode->prev = head->prev;
+        head->prev->next = newNode;
+        head->prev = newNode;
     }
 
-    struct Node* current = head;
-    while (current->next != NULL) {
-        current = current->next;
-    }
-
-    current->next = newNode;
-    newNode->prev = current;
-    return head;
+    printf("Node inserted at the end.\n");
 }
 
-// Function to insert a node before a given node in the doubly linked list
-struct Node* insertBefore(struct Node* head, struct Node* targetNode, int newData) {
-    if (targetNode == NULL) {
-        printf("Target node cannot be NULL.\n");
-        return head;
-    }
-
-    struct Node* newNode = createNode(newData);
-
-    newNode->prev = targetNode->prev;
-    newNode->next = targetNode;
-
-    if (targetNode->prev != NULL) {
-        targetNode->prev->next = newNode;
-    }
-
-    targetNode->prev = newNode;
-
-    if (head == targetNode) {
-        return newNode;
-    }
-
-    return head;
-}
-
-// Function to insert a node after a given node in the doubly linked list
-struct Node* insertAfter(struct Node* head, struct Node* prevNode, int newData) {
-    if (prevNode == NULL) {
-        printf("Previous node cannot be NULL.\n");
-        return head;
-    }
-
-    struct Node* newNode = createNode(newData);
-
-    newNode->next = prevNode->next;
-    newNode->prev = prevNode;
-
-    if (prevNode->next != NULL) {
-        prevNode->next->prev = newNode;
-    }
-
-    prevNode->next = newNode;
-
-    return head;
-}
-
-// Function to delete a node from the beginning of the doubly linked list
-struct Node* deleteFromBeginning(struct Node* head) {
+// Function to delete a node from the beginning of the circular doubly linked list
+void deleteAtBegin() {
     if (head == NULL) {
-        printf("List is empty. Cannot delete from an empty list.\n");
-        return NULL;
+        printf("Circular Doubly Linked List is empty. Cannot delete.\n");
+        return;
     }
 
-    struct Node* newHead = head->next;
-    free(head);
+    struct node *temp = head;
 
-    if (newHead != NULL) {
-        newHead->prev = NULL;
-    }
-
-    return newHead;
-}
-
-// Function to delete a node from the end of the doubly linked list
-struct Node* deleteFromEnd(struct Node* head) {
-    if (head == NULL) {
-        printf("List is empty. Cannot delete from an empty list.\n");
-        return NULL;
-    }
-
-    if (head->next == NULL) {
+    if (head->next == head) {
         free(head);
-        return NULL;
+        head = NULL;
+    } else {
+        head = head->next;
+        head->prev = temp->prev;
+        temp->prev->next = head;
+        free(temp);
     }
 
-    struct Node* current = head;
-    while (current->next != NULL) {
-        current = current->next;
-    }
-
-    current->prev->next = NULL;
-    free(current);
-
-    return head;
+    printf("Node deleted from the beginning.\n");
 }
 
-// Function to delete a node after a given node in the doubly linked list
-struct Node* deleteAfter(struct Node* head, struct Node* prevNode) {
-    if (prevNode == NULL || prevNode->next == NULL) {
-        printf("Invalid operation. Node or its next node is NULL.\n");
-        return head;
+// Function to delete a node from the end of the circular doubly linked list
+void deleteAtEnd() {
+    if (head == NULL) {
+        printf("Circular Doubly Linked List is empty. Cannot delete.\n");
+        return;
     }
 
-    struct Node* nodeToDelete = prevNode->next;
-    prevNode->next = nodeToDelete->next;
+    struct node *temp = head;
 
-    if (nodeToDelete->next != NULL) {
-        nodeToDelete->next->prev = prevNode;
+    if (head->next == head) {
+        free(head);
+        head = NULL;
+    } else {
+        head->prev->next = head->next;
+        head->next->prev = head->prev;
+        head = head->prev;
+        free(temp);
     }
 
+    printf("Node deleted from the end.\n");
+}
+
+// Function to delete a node after a given node in the circular doubly linked list
+void deleteAfterNode(int key) {
+    if (head == NULL) {
+        printf("Circular Doubly Linked List is empty. Cannot delete.\n");
+        return;
+    }
+
+    struct node *temp = head;
+    while (temp->data != key && temp->next != head) {
+        temp = temp->next;
+    }
+
+    if (temp->data != key) {
+        printf("Node with key %d not found.\n", key);
+        return;
+    }
+
+    struct node *nodeToDelete = temp->next;
+    temp->next = nodeToDelete->next;
+    nodeToDelete->next->prev = temp;
     free(nodeToDelete);
 
-    return head;
+    printf("Node deleted after the node with key %d.\n", key);
 }
 
-// Function to delete the entire doubly linked list
-void deleteList(struct Node* head) {
-    struct Node* current = head;
-    while (current != NULL) {
-        struct Node* nextNode = current->next;
-        free(current);
-        current = nextNode;
+// Function to delete the entire circular doubly linked list
+void deleteList() {
+    struct node *current = head;
+    struct node *next;
+
+    if (head != NULL) {
+        do {
+            next = current->next;
+            free(current);
+            current = next;
+        } while (current != head);
     }
+
+    head = NULL;
+    printf("Entire Circular Doubly Linked List deleted.\n");
 }
 
 int main() {
-    struct Node* head = NULL;
-
-    int choice, data;
-    struct Node* targetNode;
+    int choice, value, key;
 
     do {
         printf("\nMenu:\n");
-        printf("1. Create a doubly linked list\n");
-        printf("2. Display the elements of the doubly linked list\n");
-        printf("3. Insert a node at the beginning\n");
-        printf("4. Insert a node at the end\n");
-        printf("5. Insert a node before a given node\n");
-        printf("6. Insert a node after a given node\n");
-        printf("7. Delete a node from the beginning\n");
-        printf("8. Delete a node from the end\n");
-        printf("9. Delete a node after a given node\n");
-        printf("10. Delete the entire doubly linked list\n");
-        printf("0. Exit\n");
+        printf("1. Insert at the beginning\n");
+        printf("2. Insert at the end\n");
+        printf("3. Delete from the beginning\n");
+        printf("4. Delete from the end\n");
+        printf("5. Delete after a given node\n");
+        printf("6. Display\n");
+        printf("7. Delete the entire list\n");
+        printf("8. Exit\n");
+
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                // Create a doubly linked list
-                printf("Enter the data for the first node: ");
-                scanf("%d", &data);
-                head = createNode(data);
-                printf("Doubly linked list created.\n");
+                printf("Enter value for new node: ");
+                scanf("%d", &value);
+                insertAtBegin(value);
                 break;
 
             case 2:
-                // Display the elements of the doubly linked list
-                displayList(head);
+                printf("Enter value for new node: ");
+                scanf("%d", &value);
+                insertAtEnd(value);
                 break;
 
             case 3:
-                // Insert a node at the beginning
-                printf("Enter the data for the new node: ");
-                scanf("%d", &data);
-                head = insertAtBeginning(head, data);
-                printf("Node inserted at the beginning.\n");
+                deleteAtBegin();
                 break;
 
             case 4:
-                // Insert a node at the end
-                printf("Enter the data for the new node: ");
-                scanf("%d", &data);
-                head = insertAtEnd(head, data);
-                printf("Node inserted at the end.\n");
+                deleteAtEnd();
                 break;
 
             case 5:
-                // Insert a node before a given node
-                printf("Enter the data for the new node: ");
-                scanf("%d", &data);
-                printf("Enter the data of the target node: ");
-                scanf("%d", &data);
-                targetNode = head;
-                while (targetNode != NULL && targetNode->data != data) {
-                    targetNode = targetNode->next;
-                }
-                head = insertBefore(head, targetNode, data);
-                printf("Node inserted before the given node.\n");
+                printf("Enter the key after which you want to delete: ");
+                scanf("%d", &key);
+                deleteAfterNode(key);
                 break;
 
             case 6:
-                // Insert a node after a given node
-                printf("Enter the data for the new node: ");
-                scanf("%d", &data);
-                printf("Enter the data of the target node: ");
-                scanf("%d", &data);
-                targetNode = head;
-                while (targetNode != NULL && targetNode->data != data) {
-                    targetNode = targetNode->next;
-                }
-                head = insertAfter(head, targetNode, data);
-                printf("Node inserted after the given node.\n");
+                display();
                 break;
 
             case 7:
-                // Delete a node from the beginning
-                head = deleteFromBeginning(head);
-                printf("Node deleted from the beginning.\n");
+                deleteList();
                 break;
 
             case 8:
-                // Delete a node from the end
-                head = deleteFromEnd(head);
-                printf("Node deleted from the end.\n");
-                break;
-
-            case 9:
-                // Delete a node after a given node
-                printf("Enter the data of the target node: ");
-                scanf("%d", &data);
-                targetNode = head;
-                while (targetNode != NULL && targetNode->data != data) {
-                    targetNode = targetNode->next;
-                }
-                head = deleteAfter(head, targetNode);
-                printf("Node deleted after the given node.\n");
-                break;
-
-            case 10:
-                // Delete the entire doubly linked list
-                deleteList(head);
-                printf("Doubly linked list deleted.\n");
-                head = NULL;
-                break;
-
-            case 0:
-                // Exit the program
                 printf("Exiting the program.\n");
                 break;
 
             default:
                 printf("Invalid choice. Please enter a valid option.\n");
         }
-
-    } while (choice != 0);
+    } while (choice != 8);
 
     return 0;
 }
