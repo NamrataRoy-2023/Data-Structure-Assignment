@@ -62,15 +62,15 @@ void insertBeforeNode(int data){
 		printf("Enter The Node Number Before which you want to Insert the new node : ");
 		scanf("%d", &loc);
 		temp = head;
-		for(i=0; i<loc; i++){
+		for(i=1; i<loc; i++){
 			temp = temp -> next;
 			if(temp == NULL){
 				printf("Entered node doesn't exist.Enter a Valid input.");
 				return;
 			}
 		}
-		newNode -> next = temp;
 		newNode -> prev = temp -> prev;
+		newNode -> next = temp;
 		newNode -> prev -> next = newNode;
 		temp -> prev = newNode;
 	}
@@ -91,7 +91,7 @@ void insertAfterNode(int data){
 		printf("Enter The Node Number After which you want to Insert the new node : ");
 		scanf("%d", &loc);
 		temp = head;
-		for(i=0; i<loc; i++){
+		for(i=1; i<loc; i++){
 			temp = temp -> next;
 			if(temp == NULL){
 				printf("Entered node doesn't exist.Enter a Valid input.");
@@ -139,26 +139,40 @@ void deleteAtEnd(){
 	}
 }
 ///DELETE A NODE AFTER A GIVEN NODE
-void deleteAfterNode(int key){
+void deleteAfterNode(){
 	int i,loc;
-	struct node * ptr1,*ptr2;
-	ptr1 = head;
+	struct node * temp;
 	if(head == NULL){
 		printf("Linked List is Empty.");
 	}
 	else{
-		while(ptr1 -> next != NULL){
-			if(ptr1 -> data == key){
-				ptr2 = ptr1 -> next;
-				ptr1 -> next = ptr2 -> next;
-				free(ptr2);
-				break;
+		printf("Enter The Node Number After which you want to delete the node : ");
+		scanf("%d", &loc);
+		temp = head;
+		for(i=1; i<=loc; i++){
+			temp = temp -> next;
+			if(temp == NULL){
+				printf("Entered node doesn't exist.Enter a Valid input.");
+				return;
 			}
-			ptr1 = ptr1 -> next;
 		}
+		temp -> next = temp -> next -> next;
+		temp -> next ->prev = temp;
+		free(temp);
 	}
 }
 
+///DELETE THE LIST
+void deleteList() {
+    struct node *current = head;
+    struct node *next;
+    while (current != NULL) {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    head = NULL;
+}
 
 ///DISPLAY
 void display(){
@@ -168,7 +182,7 @@ void display(){
 		return;
 	}
 	else{
-		printf("START <-> ");
+		printf("NULL <-> ");
 		while(current != NULL){
 			printf("%d <-> " , current->data);
 			current = current -> next;
@@ -179,50 +193,81 @@ void display(){
 
 
 
-int main(){
-	int i,n,value;
-	printf("Enter number of Nodes : ");
-	scanf("%d", &n);
-	for(i=0; i<n; i++){
-		printf("Enter value for Node Number %d : ", i+1);
-		scanf("%d", &value);
-		insertAtEnd(value);	
-	}
-	display();
-	
-	printf("\n");
-	
-	printf("Enter value for new Node : ");
-	scanf("%d", &value);
-	insertBeforeNode(value);
-	printf("New list after insertion before a node : ");
-	display();
-		
-	printf("\n");
-	
-	printf("Enter value for new Node : ");
-	scanf("%d", &value);
-	insertAfterNode(value);
-	printf("New list after insertion After a node : ");
-	display();
-	
-	printf("\n");
-	
-	deleteAtBegin();
-	printf("New list after deletion of first element : ");
-	display();
-		
-	printf("\n");
-	
-	deleteAtEnd();
-	printf("New list after deletion of last element : ");
-	display();
-	
-    printf("\n");
-	
-	printf("enter node you want to delete : ");
-	scanf("%d", &value);
-	deleteAfterNode(value);
-	printf("New list after deletion of node after a node: ");
-	display();
+int main() {
+    int choice, value;
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Insert at the beginning\n");
+        printf("2. Insert at the end\n");
+        printf("3. Insert before a node\n");
+        printf("4. Insert after a node\n");
+        printf("5. Delete at the beginning\n");
+        printf("6. Delete at the end\n");
+        printf("7. Delete after a node\n");
+        printf("8. Display\n");
+        printf("9. Delete the entire list\n");
+        printf("10. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value for new Node: ");
+                scanf("%d", &value);
+                insertAtBegin(value);
+                break;
+
+            case 2:
+                printf("Enter value for new Node: ");
+                scanf("%d", &value);
+                insertAtEnd(value);
+                break;
+
+            case 3:
+                printf("Enter value for new Node: ");
+                scanf("%d", &value);
+                insertBeforeNode(value);
+                break;
+
+            case 4:
+                printf("Enter value for new Node: ");
+                scanf("%d", &value);
+                insertAfterNode(value);
+                break;
+
+            case 5:
+                deleteAtBegin();
+                break;
+
+            case 6:
+                deleteAtEnd();
+                break;
+
+            case 7:
+                printf("Enter node value after which you want to delete: ");
+                scanf("%d", &value);
+                deleteAfterNode(value);
+                break;
+
+            case 8:
+                display();
+                break;
+
+            case 9:
+                deleteList();
+                printf("Entire list deleted.\n");
+                break;
+
+            case 10:
+                printf("Exiting the program.\n");
+                break;
+
+            default:
+                printf("Invalid choice. Please enter a valid option.\n");
+        }
+    } while (choice != 10);
+
+    return 0;
 }
