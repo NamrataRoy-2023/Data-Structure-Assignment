@@ -1,4 +1,4 @@
-///LINKED LIST PRACTICE
+///SINGLY LINKED LIST PRACTICE
 #include<stdio.h>
 #include<stdlib.h>
 
