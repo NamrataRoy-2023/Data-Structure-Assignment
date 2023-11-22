@@ -22,7 +22,7 @@ struct node *createnode(int val){
 void createList(){
     if(start == NULL){
         int n,i,dta;
-        printf("\nEnter number of nodes you want to ebter : ");
+        printf("\nEnter number of nodes you want to enter : ");
         scanf("%d" ,&n);
         if(n != 0){
             struct node *temp;
@@ -48,6 +48,104 @@ void createList(){
     }
 }
 
+///INSERT AT FIRST
+void insertFirst(){
+    int dta;
+    printf("\nEnter value for new Node : ");
+    scanf("%d",&dta);
+    struct node * newNode = createnode(dta);
+    newNode->link=start;
+    start = newNode;
+    newNode->prev = start;
+    printf("\nNode entered successfully.");
+}
+
+///INSERT AT LAST
+void insertLast(){
+    int dta;
+    printf("\nEnter value for new Node : ");
+    scanf("%d",&dta);
+    struct node * newNode = createnode(dta);
+    struct node * temp =start;
+    while(temp->link != NULL){
+        temp = temp->link;
+    }
+    temp->link = newNode ;
+    newNode->prev = temp;
+}
+
+///DELETE AT FIRST
+void deletefirst(){
+    if(start == NULL){
+        printf("\nDeletion not possible.");
+    }
+    else{
+        struct node *temp = start;
+        start = start ->link;
+        start->link->prev = start;
+        printf("\nDeletion successful");
+    }
+}
+
+
+///DELETE AT LAST
+void deleteLast(){
+    if(start == NULL){
+        printf("\nDeletion not possible.");
+    }
+    else{
+        struct node *temp = start;
+        while(temp->link != NULL){
+            temp = temp->link;
+        }
+        temp->prev->link = NULL;
+        free(temp);
+        printf("\nDeletion successful.");
+    }
+}
+
+///DELETE AFTER A NODE
+void deleteAfterNode(){
+    if(start == NULL){
+        printf("\nDeletion not possible.");
+    }
+    else{
+        struct node*temp =start;
+        struct node * previous;
+        int n,i;
+        printf("\nEnter node number after which you want to perform deletion : ");
+        scanf("%d" ,&n);
+        for(i=0;i<n;i++){
+            previous = temp;
+            temp=temp->link;
+        }
+        previous->link =temp->link;
+        temp->link->prev = previous;
+        free(temp);
+    }
+}
+
+///DELETE BEFORE A NODE
+void deleteBeforeNode(){
+    if(start == NULL){
+        printf("\nDeletion not possible.");
+    }
+    else{
+        struct node*temp =start;
+        struct node * previous;
+        int n,i;
+        printf("\nEnter node number after which you want to perform deletion : ");
+        scanf("%d" ,&n);
+        for(i=0;i<n-2;i++){
+            previous = temp;
+            temp=temp->link;
+        }
+        previous->link =temp->link;
+        temp->link->prev = previous;
+        free(temp);
+    }
+}
+
 ///DISPLAY
 void display(){
     struct node *temp = start;
@@ -60,11 +158,23 @@ void display(){
             printf("%d <-> ",temp->data);
             temp = temp ->link;
         }
-        printf("NULL");
+        printf(" NULL");
     }
 }
 
 int main(){
     createList();
+    display();
+    insertFirst();
+    display();
+    insertLast();
+    display();
+    deletefirst();
+    display();
+    deleteLast();
+    display();
+    deleteAfterNode();
+    display();
+    deleteBeforeNode();
     display();
 }
