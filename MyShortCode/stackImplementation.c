@@ -72,11 +72,35 @@ void display(){
 
 ///MAIN FUNCTION
 int main(){
-	push();
-	push();
-	push();
-	display();
-	pop();
-	display();
-	peek();
+	int choice;
+	do{
+		printf("\nMENU : ");
+		printf("\n1.Push Element");
+		printf("\n2.Pop Element");
+		printf("\n3.Peek Element");
+		printf("\n4.Display Element");
+		printf("\n0.EXIT");
+		printf("\nEnter your Choice : ");
+		scanf("%d",&choice);
+		switch(choice){
+			case 1:
+				push();
+				break;
+			case 2:
+				pop();
+				break;
+			case 3: 
+				peek();
+				break;
+			case 4:
+				display();
+				break;
+			case 0:
+				printf("\nExiting the program.");
+				break;
+			default:
+				printf("\nINVALID CHOICE : Please enter a correct choice.");
+		}
+	}while(choice !=0);
+	return 0;
 }
