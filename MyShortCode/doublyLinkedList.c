@@ -60,6 +60,49 @@ void insertFirst(){
     printf("\nNode entered successfully.");
 }
 
+///INSERT AFTER A NODE
+void insertAfterNode(){
+	int n,i,dta; 
+	printf("\nEnter node number after which you want to perform insertion : ");
+    scanf("%d" ,&n); 
+    if(n!=0){
+    	printf("\nEnter value for new Node : ");
+    	scanf("%d",&dta);
+    	struct node* temp = start;
+    	struct node*newNode = createnode(dta);
+    	for(i=0;i<n-1;i++){
+    		temp = temp->link;
+		}
+		newNode->link = temp->link;
+		temp->link->prev = newNode;
+		temp->link=newNode;
+		newNode->prev = temp;
+    	printf("INSERTION SUCCESSFUL.");
+	}
+}
+
+
+//INSERT BEFORE A NODE
+void insertBeforeNode(){
+	int n,i,dta; 
+	printf("\nEnter node number before which you want to perform insertion : ");
+    scanf("%d" ,&n); 
+    if(n!=0){
+    	printf("\nEnter value for new Node : ");
+    	scanf("%d",&dta);
+    	struct node* temp = start;
+    	struct node*newNode = createnode(dta);
+    	for(i=0;i<n-2;i++){
+    		temp = temp->link;
+		}
+		newNode->link = temp->link;
+		temp->link->prev = newNode;
+		temp->link=newNode;
+		newNode->prev = temp;
+    	printf("INSERTION SUCCESSFUL.");
+	}
+}
+
 ///INSERT AT LAST
 void insertLast(){
     int dta;
@@ -176,5 +219,9 @@ int main(){
     deleteAfterNode();
     display();
     deleteBeforeNode();
+    display();
+    insertAfterNode();
+    display();
+    insertBeforeNode();
     display();
 }
