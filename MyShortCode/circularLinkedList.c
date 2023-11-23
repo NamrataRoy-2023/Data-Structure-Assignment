@@ -70,7 +70,12 @@ void insertFront(){
     printf("\n Enter NEW Node value: ");
     scanf("%d", &dta);
     struct node *newNode = createnode(dta);
+    struct node*temp = start;
     newNode->link = start;
+    do{
+        temp = temp->link;
+    }while(temp->link != start);
+    temp ->link = newNode;
     start = newNode;
 }
 
@@ -82,7 +87,7 @@ void insertAfterNode(){
     struct node *temp = start;
     printf("Enter node after which you perform insertion : ");
     scanf("%d",&n);
-    for(i=1;i<n;i++){
+    for(i=1;i<n && temp->link != start ;i++){
         temp=temp->link;
     }
     newNode->link = temp->link;
@@ -98,7 +103,7 @@ void insertBeforeNode(){
     struct node *temp = start;
     printf("Enter node before which you perform insertion : ");
     scanf("%d",&n);
-    for(i=1;i<n-1;i++){
+    for(i=1;i<n-1 && temp->link != start ;i++){
         temp=temp->link;
     }
     newNode->link = temp->link;
@@ -119,10 +124,10 @@ void insertEnd(){
         scanf("%d", &dta);
         newNode = createnode(dta);
         temp = start;
-        while(temp->link != NULL){
+        do{
             temp = temp ->link;
-        }
-        temp ->link = newNode;
+        }while(temp->link != start);
+        temp->link = newNode;
     }
 }
 
@@ -133,8 +138,12 @@ void deleteFront(){
         return;
     }
     else{
-        start = start->link;
-        free(temp);
+        while(temp->link != start){
+            temp = temp->link;
+        }
+        temp ->link = start->link;
+        free(start);
+        start = temp->link;
     }
     printf("\nFIRST Node successfully deleted.");
 }
@@ -147,11 +156,11 @@ void deleteEnd(){
         return;
     }
     else{
-        while(temp->link !=NULL){
+        while(temp->link !=start){
             prev = temp;
             temp = temp->link;
         }
-        prev->link=NULL;
+        prev->link = start;
         free(temp);
     }
     printf("\nLAST Node successfully deleted.");
